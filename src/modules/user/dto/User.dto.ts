@@ -13,15 +13,6 @@ export class UserDto extends AbstractDto {
   @ApiPropertyOptional()
   status: number;
 
-  @ApiPropertyOptional()
-  telegramId: string;
-
-  @ApiPropertyOptional()
-  walletId: string;
-
-  @ApiPropertyOptional()
-  balance: number;
-
   @ApiHideProperty()
   password: string;
 
@@ -30,8 +21,5 @@ export class UserDto extends AbstractDto {
     this.email = user.email;
     this.phone = user.phone;
     this.status = user.status;
-    this.telegramId = user.telegramId;
-    this.walletId = user.walletId;
-    this.balance = user.balance;
   }
 }

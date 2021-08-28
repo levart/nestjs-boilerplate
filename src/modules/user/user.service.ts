@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/User.dto';
 import { UsersPageOptionsDto } from './dto/users-page-options.dto';
@@ -23,16 +19,7 @@ export class UserService {
   async findOneForAuth(email: string): Promise<UserEntity> {
     try {
       return await this.userRepository.findOne({
-        select: [
-          'id',
-          'email',
-          'password',
-          'phone',
-          'status',
-          'telegramId',
-          'walletId',
-          'balance',
-        ],
+        select: ['id', 'email', 'password', 'phone', 'status'],
         where: { email },
       });
     } catch (e) {
@@ -53,11 +40,7 @@ export class UserService {
   }
 
   async create(userCreateDto: UserCreateDto): Promise<UserDto> {
-    if (
-      !userCreateDto.email &&
-      !userCreateDto.phone &&
-      !userCreateDto.telegramId
-    ) {
+    if (!userCreateDto.email && !userCreateDto.phone) {
       throw new ExceptionType(
         400,
         'One of the fields is required: email, phone, telegramId',
@@ -110,9 +93,6 @@ export class UserService {
         {
           email: dto.email,
           phone: dto.phone,
-          telegramId: dto.telegramId,
-          walletId: dto.walletId,
-          balance: dto.balance,
           status: dto.status,
         },
       );
